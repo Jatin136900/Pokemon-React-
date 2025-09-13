@@ -8,8 +8,6 @@ export default function PokemonApp() {
   const [type, setType] = useState("");
   const [allTypes, setAllTypes] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
-
-  // 👉 Typewriter heading
   const [displayedText, setDisplayedText] = useState("");
   const fullText = "Pokémon Kingdom";
 
@@ -26,7 +24,7 @@ export default function PokemonApp() {
     return () => clearInterval(interval);
   }, []);
 
-  // 👉 Fetch Pokémons
+
   useEffect(() => {
     fetchPokemons();
   }, [offset]);
@@ -52,8 +50,6 @@ export default function PokemonApp() {
         };
       })
     );
-
-    // ✅ Remove duplicates using Map
     setPokemons((prev) => {
       const all = [...prev, ...details];
       const unique = new Map(all.map((p) => [p.name, p]));
@@ -63,7 +59,7 @@ export default function PokemonApp() {
     setLoading(false);
   }
 
-  // 👉 Fetch Pokémon Types
+
   useEffect(() => {
     fetchTypes();
   }, []);
@@ -74,7 +70,7 @@ export default function PokemonApp() {
     setAllTypes(data.results.map((t) => t.name));
   }
 
-  // 👉 Filter logic
+
   let shownPokemons = pokemons.filter(
     (p) =>
       p.name.toLowerCase().includes(search.toLowerCase()) &&
@@ -83,12 +79,9 @@ export default function PokemonApp() {
 
   return (
     <div className="min-h-screen relative p-6 font-sans overflow-hidden">
-      {/* Animated Background */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-purple-900 via-indigo-800 to-blue-900 animate-gradient-x">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
       </div>
-
-      {/* Title */}
       <h1
         className="text-5xl md:text-6xl font-extrabold text-center mb-10 
                    bg-gradient-to-r from-indigo-400 via-sky-500 to-emerald-400 
@@ -99,8 +92,6 @@ export default function PokemonApp() {
         {displayedText}
         <span className="animate-pulse">|</span>
       </h1>
-
-      {/* Search + Filter */}
       <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12">
         <input
           type="text"
@@ -122,8 +113,6 @@ export default function PokemonApp() {
           ))}
         </select>
       </div>
-
-      {/* Pokémon Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {shownPokemons.length > 0 ? (
           shownPokemons.map((p, i) => (
@@ -131,7 +120,7 @@ export default function PokemonApp() {
               key={i}
               className="group relative bg-white/10 backdrop-blur-xl border border-purple-500/30 p-6 rounded-3xl shadow-xl hover:scale-105 hover:rotate-1 transform transition duration-500 cursor-pointer overflow-hidden"
             >
-              {/* Neon Glow */}
+          
               <div className="absolute inset-0 rounded-3xl opacity-40 group-hover:opacity-70 blur-xl bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-400 transition"></div>
 
               <img
@@ -160,7 +149,7 @@ export default function PokemonApp() {
         )}
       </div>
 
-      {/* Load More Button */}
+ 
       {!type && (
         <div className="flex justify-center mt-10">
           <button
@@ -172,8 +161,6 @@ export default function PokemonApp() {
           </button>
         </div>
       )}
-
-      {/* Pokémon Details Modal */}
       {selectedPokemon && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
           <div className="relative bg-white/10 backdrop-blur-xl p-8 rounded-3xl w-96 border border-sky-400/40 shadow-2xl animate-fadeIn">
