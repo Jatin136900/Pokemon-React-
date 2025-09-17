@@ -95,7 +95,7 @@ export default function PokemonApp() {
       <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12">
         <input
           type="text"
-          placeholder="🔍 Search Pokémon..."
+          placeholder=" Search Pokémon..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full md:w-1/3 p-4 rounded-2xl border border-purple-400/50 bg-white/5 backdrop-blur-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-400 shadow-lg transition"
@@ -138,13 +138,13 @@ export default function PokemonApp() {
                 onClick={() => setSelectedPokemon(p)}
                 className="relative mt-5 w-full py-2 font-semibold rounded-xl bg-gradient-to-r from-sky-500/40 to-emerald-500/40 border border-sky-400/60 text-white shadow-md hover:scale-105 hover:shadow-sky-400/40 transition"
               >
-                Know More 🚀
+                Know More 
               </button>
             </div>
           ))
         ) : (
           <h2 className="text-center text-3xl col-span-full font-bold text-white mt-16 animate-bounce">
-            ❌ No Pokémon Found
+             No Pokémon Found
           </h2>
         )}
       </div>
@@ -157,7 +157,7 @@ export default function PokemonApp() {
             disabled={loading}
             className="px-10 py-4 font-bold rounded-xl bg-gradient-to-r from-sky-500 via-indigo-500 to-emerald-500 text-white shadow-lg hover:shadow-sky-400/40 hover:scale-105 transition disabled:opacity-50"
           >
-            {loading ? "⚡ Loading..." : "⚡ Load More"}
+            {loading ? " Loading..." : " Load More"}
           </button>
         </div>
       )}
@@ -182,8 +182,8 @@ export default function PokemonApp() {
               {selectedPokemon.types.join(", ")}
             </p>
             <div className="mt-6 text-white/90 space-y-2">
-              <p>🌍 Height: {selectedPokemon.height}</p>
-              <p>⚖️ Weight: {selectedPokemon.weight}</p>
+              <p> Height: {selectedPokemon.height}</p>
+              <p> Weight: {selectedPokemon.weight}</p>
               {selectedPokemon.stats.map((s, i) => (
                 <p key={i}>
                   {s.stat.name.toUpperCase()}: {s.base_stat}
