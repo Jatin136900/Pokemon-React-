@@ -13,17 +13,23 @@ export default function PokemonApp() {
 
   useEffect(() => {
     let i = 0;
-    const interval = setInterval(() => {
-      i++;
+    const typing = () => {
       setDisplayedText(fullText.substring(0, i));
-      if (i === fullText.length) {
+      if (i < fullText.length) {
+        i++;
+      } else {
+       
         clearInterval(interval);
+        setTimeout(() => {
+          i = 0;
+          interval = setInterval(typing, 120);
+        }, 1000); 
       }
-    }, 120);
+    };
 
+    let interval = setInterval(typing, 120);
     return () => clearInterval(interval);
   }, []);
-
 
   useEffect(() => {
     fetchPokemons();
@@ -59,7 +65,6 @@ export default function PokemonApp() {
     setLoading(false);
   }
 
-
   useEffect(() => {
     fetchTypes();
   }, []);
@@ -70,7 +75,6 @@ export default function PokemonApp() {
     setAllTypes(data.results.map((t) => t.name));
   }
 
-
   let shownPokemons = pokemons.filter(
     (p) =>
       p.name.toLowerCase().includes(search.toLowerCase()) &&
@@ -79,9 +83,12 @@ export default function PokemonApp() {
 
   return (
     <div className="min-h-screen relative p-6 font-sans overflow-hidden">
+      {/* Background */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-purple-900 via-indigo-800 to-blue-900 animate-gradient-x">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
       </div>
+
+      
       <h1
         className="text-5xl md:text-6xl font-extrabold text-center mb-10 
                    bg-gradient-to-r from-indigo-400 via-sky-500 to-emerald-400 
@@ -92,6 +99,8 @@ export default function PokemonApp() {
         {displayedText}
         <span className="animate-pulse">|</span>
       </h1>
+
+   
       <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12">
         <input
           type="text"
@@ -113,6 +122,8 @@ export default function PokemonApp() {
           ))}
         </select>
       </div>
+
+
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {shownPokemons.length > 0 ? (
           shownPokemons.map((p, i) => (
@@ -120,7 +131,6 @@ export default function PokemonApp() {
               key={i}
               className="group relative bg-white/10 backdrop-blur-xl border border-purple-500/30 p-6 rounded-3xl shadow-xl hover:scale-105 hover:rotate-1 transform transition duration-500 cursor-pointer overflow-hidden"
             >
-          
               <div className="absolute inset-0 rounded-3xl opacity-40 group-hover:opacity-70 blur-xl bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-400 transition"></div>
 
               <img
@@ -138,18 +148,18 @@ export default function PokemonApp() {
                 onClick={() => setSelectedPokemon(p)}
                 className="relative mt-5 w-full py-2 font-semibold rounded-xl bg-gradient-to-r from-sky-500/40 to-emerald-500/40 border border-sky-400/60 text-white shadow-md hover:scale-105 hover:shadow-sky-400/40 transition"
               >
-                Know More 
+                Know More
               </button>
             </div>
           ))
         ) : (
           <h2 className="text-center text-3xl col-span-full font-bold text-white mt-16 animate-bounce">
-             No Pokémon Found
+            No Pokémon Found
           </h2>
         )}
       </div>
 
- 
+     
       {!type && (
         <div className="flex justify-center mt-10">
           <button
@@ -161,6 +171,7 @@ export default function PokemonApp() {
           </button>
         </div>
       )}
+
       {selectedPokemon && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
           <div className="relative bg-white/10 backdrop-blur-xl p-8 rounded-3xl w-96 border border-sky-400/40 shadow-2xl animate-fadeIn">
